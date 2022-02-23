@@ -1,0 +1,93 @@
+﻿@model List<DriverViewModel>
+@{
+    ViewData["Title"] = "Listagem de Motoristas";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-primary" role="button" asp-controller="Driver" asp-action="CreateDriver">Cadastrar Motorista</a>
+</div>
+<br />
+
+@if (TempData["MensagemSucesso"] != null)
+{
+<div class="alert alert-success" role="alert">
+    <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">
+        X
+    </button>
+    @TempData["MensagemSucesso"]
+</div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<br />
+<h1>Listagem de Motoristas</h1>
+
+
+<div class="table-responsive">
+    <table id="Drivers" class="table table-hover table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Cep</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">UF</th>
+                <th scope="col">Municipio</th>
+                <th scope="col">Caminhão</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Eixo</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Placa</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var drivers in Model)
+                {
+                    <tr style="white-space: nowrap">
+                        <td>@drivers.FirstName @drivers.LastName </td>
+                        <td>@drivers.Cep </td>
+                        <td>@drivers.StreetName @drivers.StreetNumber @drivers.StreetComplement </td>
+                        <td>@drivers.District</td>
+                        <td>@drivers.Uf</td>
+                        <td>@drivers.Municipio</td>
+                        <td>@drivers.Truck</td>
+                        <td>@drivers.Marck</td>
+                        <td>@drivers.Axis</td>
+                        <td>@drivers.Model</td>
+                        <td>@drivers.Plaque</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-primary" asp-controller="Driver" asp-action="EditDriver" asp-route-id="@drivers.Id">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-controller="Driver" asp-action="DeleteDriver" asp-route-id="@drivers.Id">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#Drivers').DataTable({
+                ordering: true,
+                "oLanguage": {
+                    "sUrl": "/DataTableLang/pt-br.json"
+                },
+                dom: 'Bfrtip'
+            });
+        });
+    </script>
+}

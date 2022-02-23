@@ -1,0 +1,41 @@
+﻿@model CadViagem.Models.TripViewModel
+
+<div class="text-center">
+    <h1 class="display-4">Cadastrar Viagem</h1>
+</div>
+
+<form asp-controller="Trip" asp-action="CreateTrip" method="post">
+
+    <div class="form-group">
+        @Html.DropDownListFor(model => model.DriverId, Model.Drivers, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Date" class="control-label"></label>
+        <input asp-for="Date" class="form-control">
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LocaleEntry" class="control-label"></label>
+        <input type="text" asp-for="LocaleEntry" class="form-control" placeholder="Digite qual foi o local de entrada">
+        <span asp-validation-for="LocaleEntry" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LocaleExit" class="control-label"></label>
+        <input asp-for="LocaleExit" class="form-control" placeholder="Digite qual foi o local de saída" />
+        <span asp-validation-for="LocaleExit" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="KM" class="control-label"></label>
+        <input asp-for="KM" class="form-control form-control-sm" />
+        <span asp-validation-for="KM" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Adicionar Viagem</button>
+    <a class="btn btn-secondary btn-block" asp-controller="Trip" asp-action="Index" role="button">Voltar</a>
+</form>
+

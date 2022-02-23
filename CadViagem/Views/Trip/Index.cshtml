@@ -1,0 +1,77 @@
+﻿@model List<TripViewModel>
+
+
+@{
+    ViewData["Title"] = "Listagem de Viagens";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-primary" role="button" asp-controller="Trip" asp-action="CreateTrip">Cadastrar Viagem</a>
+</div>
+<br />
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">
+            X
+        </button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<h1>Listagem de Viagens</h1>
+
+<div class="table-responsive">
+    <table id="Trips" class="table table-hover table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th scope="col">Motorista</th>
+                <th scope="col">Data de viagem</th>
+                <th scope="col">Local de entrada</th>
+                <th scope="col">Local de saída</th>
+                <th scope="col">KM</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var trips in Model)
+                {
+                    <tr style="white-space: nowrap">
+                        <td>@trips.Driver.FirstName @trips.Driver.LastName</td>
+                        <td>@trips.Date</td>
+                        <td>@trips.LocaleEntry </td>
+                        <td>@trips.LocaleExit </td>
+                        <td>@trips.KM</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#Trips').DataTable({
+                ordering: true,
+                "oLanguage": {
+                    "sUrl": "/DataTableLang/pt-br.json"
+                },
+                dom: 'Bfrtip'
+            });
+        });
+    </script>
+}
+
+
